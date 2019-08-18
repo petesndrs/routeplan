@@ -1,3 +1,4 @@
+import os
 import requests
 import csv
 import json
@@ -5,8 +6,17 @@ import xml.etree.cElementTree as ET
 
 debug = True
 
+input = '../routes/route1/route1.ll'
+print(input)
+input_abs = os.path.abspath(input)
+print(input_abs)
+input_root = os.path.dirname(input_abs)
+print(input_root)
+input_fileroot, _ = os.path.splitext(input_abs)
+print(input_fileroot)
+
 query_string = ''
-with open('../routes/route1/route1.ll') as csv_file:
+with open(input) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
@@ -65,7 +75,7 @@ for point in data['results']:
     ET.SubElement(rte, "rtept", lat=str(point['latitude']), lon=str(point['longitude']), ele=str(point['elevation']))
 
 tree = ET.ElementTree(gpx)
-tree.write("filename.gpx", encoding='utf-8', xml_declaration=True)
+tree.write(input_fileroot+'.gpx', encoding='utf-8', xml_declaration=True)
 
 print("STEP: GPX file created") 
 
