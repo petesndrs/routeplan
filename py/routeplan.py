@@ -1,4 +1,5 @@
 import os
+import configparser
 import requests
 import csv
 import json
@@ -14,6 +15,10 @@ input_root = os.path.dirname(input_abs)
 print(input_root)
 input_fileroot, _ = os.path.splitext(input_abs)
 print(input_fileroot)
+
+config = configparser.ConfigParser()
+config.read(input_fileroot+'.data')
+print(config.sections())
 
 query_string = ''
 with open(input) as csv_file:
