@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="edfr.css">
+<title>East Dulwich Fell Running</title>
+
+<script>
+
+function footer() {
+    document.getElementById("foottext1").innerHTML = "Last generated: " +
+// INSERT-DATE-HERE
+    "2019-08-23 21:36:39"+
+	"";
+	document.getElementById("foottext2").innerHTML = "Version: " +
+// INSERT-VERSION-HERE
+    "0.1.0-master+4410723"+
+	"";
+	}
+
+function body() {
+	footer();
+}
+
+</script>
+
+</head>
+
+<body onload="body()">
+
+<table>
+  <col style="width:20%">
+  <col style="width:80%">
+    <tr>
+        <td><img src="EDFR-logo.png" width=100% alt="East Dulwich Fell Running"></td>
+        <td><h2>Text</h2></td>
+    </tr>
+</table>
+
+
+<p> 
+Add text here.
+</p>
+
+<h3>Routes</h3>
+
+<!--INSERT-ROUTE-LINKS-HERE-->
+<a href=EDFR1.html >EDFR1: Peckham Rye and Honor Oak</a>
+<footer>
+  <p id="foottext1"></p>
+  <p id="foottext2"></p>
+  <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
+</footer>
+
+</body>
+
+</html>
