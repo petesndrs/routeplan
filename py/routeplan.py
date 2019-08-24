@@ -29,7 +29,8 @@ def getPeaks():
         for row in csv_reader:
             peaks[row[0].strip()] = {
                 'latitude'  : row[1].strip(),
-                'longitude' : row[2].strip() }
+                'longitude' : row[2].strip(),
+                'elevation' : row[3].strip() }
         print(peaks)
     return peaks
 
