@@ -1,53 +1,72 @@
+'''routeplan.py
+'''
 import os
 import configparser
 import fileinput
-import requests
 import csv
 import json
 import xml.etree.cElementTree as ET
-import semver
 from datetime import datetime
+import requests
+import semver
 import git
 
 MAJOR = 0
 MINOR = 1
 PATCH = 0
 
-debug = True
+DEBUG = True
 
-waymarks_csv = '../waymarks/waymarks.csv'
-path_routes = '../routes/'
-top_html_template = '../docs_templates/edfr.template.html'
-top_html_name = '../docs/EDFR.html'
-html_path = '../docs/'
+WAYMARKS_CSV = '../waymarks/waymarks.csv'
+PATH_ROUTES = '../routes/'
+TOP_HTML_TEMPLATE = '../docs_templates/edfr.template.html'
+TOP_HTML_NAME = '../docs/EDFR.html'
+HTML_PATH = '../docs/'
 
-def getPeaks():
-    with open(waymarks_csv) as csv_file:
+
+def get_coords(coords_csv):
+    '''Function get_coords
+    '''
+    coords_from_csv = []
+    with open(coords_csv) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
-        peaks = {}
         for row in csv_reader:
-            peaks[row[0].strip()] = {
-                'latitude'  : row[1].strip(),
-                'longitude' : row[2].strip(),
-                'elevation' : row[3].strip() }
-        print(peaks)
-    return peaks
+            coord_from_csv = {'latitude': row[0].strip(),
+                              'longitude': row[1].strip()}
+            coords_from_csv.append(coord_from_csv)
+            line_count += 1
+    print('Processed {} lines.'.format(line_count))
+    return coords_from_csv
 
-def getPathAndFileroot(file):
-    '''Function getPathAndFileroot
+
+def get_peaks():
+    '''Function get_peaks
+    '''
+    with open(WAYMARKS_CSV) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        peaks_from_csv = {}
+        for csv_row in csv_reader:
+            peaks_from_csv[csv_row[0].strip()] = {
+                'latitude': csv_row[1].strip(),
+                'longitude': csv_row[2].strip(),
+                'elevation': csv_row[3].strip()}
+        print(peaks_from_csv)
+    return peaks_from_csv
+
+
+def get_path_and_fileroot(file):
+    '''Function get_path_and_fileroot
     '''
     input_abs = os.path.abspath(file)
     print(input_abs)
-    input_root = os.path.dirname(input_abs)
-    print(input_root)
-    input_fileroot, _ = os.path.splitext(input_abs)
-    print(input_fileroot)
-    return input_root, input_fileroot
+    input_root_path = os.path.dirname(input_abs)
+    print(input_root_path)
+    return input_root_path
 
 
-def gitBranchAndSha():
-    '''Function gitBranchAndSha
+def git_branch_and_sha():
+    '''Function git_branch_and_sha
     '''
     repo = git.Repo('..')
     branch = repo.active_branch.name
@@ -55,72 +74,67 @@ def gitBranchAndSha():
     short_sha = repo.git.rev_parse(sha, short=7)
     return branch, short_sha
 
+
 print('STEP: Read peaks')
-peaks = getPeaks()
+PEAKS = get_peaks()
 
-dir_list = next(os.walk(path_routes))[1]
-print(dir_list)
+DIR_LIST = next(os.walk(PATH_ROUTES))[1]
+print(DIR_LIST)
 
-all_routes = []
-new_route = {}
+ALL_ROUTES = []
+NEW_ROUTE = {}
 
-for dir in dir_list:
+for next_dir in DIR_LIST:
 
-    input = path_routes + dir + '/latlong.csv'
+    input_csv = PATH_ROUTES + next_dir + '/latlong.csv'
 
-    print(input)
-    input_root, input_fileroot = getPathAndFileroot(input)
+    print(input_csv)
+    input_root = get_path_and_fileroot(input_csv)
 
     config = configparser.ConfigParser()
-    config.read(input_root+'/route.data')
+    config.read(input_root + '/route.data')
     print(config.sections())
 
-    new_route['reference'] = config['route']['reference']
-    new_route['title'] = config['route']['title']
+    NEW_ROUTE['reference'] = config['route']['reference']
+    NEW_ROUTE['title'] = config['route']['title']
+
+    coords = get_coords(input_csv)
 
     query_string = ''
-    with open(input) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        line_count = 0
-        for row in csv_reader:
-            r0=row[0].strip()
-            r1=row[1].strip()
-            if line_count == 0:
-                query_string+=r0+','+r1
-            else:
-                query_string+='|'+r0+','+r1
-            line_count += 1
-            if debug:
-                print('Latitude {} Longitude {}'.format(r0,r1))
-      
-        print('Processed {} lines.'.format(line_count))
+    first_line = 1
+    for coord in coords:
+        if first_line == 1:
+            query_string += coord['latitude'] + ',' + coord['longitude']
+            first_line = 0
+        else:
+            query_string += '|' + coord['latitude'] + ',' + coord['longitude']
 
-    if debug:
+    if DEBUG:
         print(query_string)
 
     print('STEP: Read co-ordinates')
 
-    parameters = {'locations': query_string }
+    parameters = {'locations': query_string}
 
-
-    if debug:
+    if DEBUG:
         print(requests.certs.where())
 
     success = False
 
     while not success:
         try:
-            r = requests.get('https://api.open-elevation.com/api/v1/lookup', params=parameters)
-            if debug:
+            r = requests.get('https://api.open-elevation.com/api/v1/lookup',
+                             params=parameters)
+            if DEBUG:
                 print(r.url)
                 print(r.status_code)
             if r.status_code == 200:
-                if debug:
+                if DEBUG:
                     print(r.text)
                 data = json.loads(r.text)
                 success = True
         except requests.exceptions.RequestException as ereq:
-            if debug:
+            if DEBUG:
                 print('Ooops exception')
                 print(ereq)
 
@@ -128,53 +142,56 @@ for dir in dir_list:
 
     print(data['results'])
 
-    for point in data['results']:
-        print('{} {}'.format(point['latitude'], point['longitude']))
-
     gpx = ET.Element("gpx", version="1.1", creator="Manual")
 
     # Add waymarks
-    wptstart = ET.SubElement(gpx, "wpt", lat=str(data['results'][0]['latitude']), 
-        lon=str(data['results'][0]['longitude']))
+    wptstart = ET.SubElement(gpx, "wpt",
+                             lat=str(data['results'][0]['latitude']),
+                             lon=str(data['results'][0]['longitude']))
     ET.SubElement(wptstart, 'name').text = 'Start'
 
-    wptfinish = ET.SubElement(gpx, "wpt", lat=str(data['results'][-1]['latitude']), 
-        lon=str(data['results'][-1]['longitude']))
+    wptfinish = ET.SubElement(gpx, "wpt",
+                              lat=str(data['results'][-1]['latitude']),
+                              lon=str(data['results'][-1]['longitude']))
     ET.SubElement(wptfinish, 'name').text = 'Finish'
 
     for peak in config['features']['peaks'].split(','):
         print(peak.strip())
-        wpt = ET.SubElement(gpx, "wpt", lat=peaks[peak.strip()]['latitude'], 
-            lon=peaks[peak.strip()]['longitude'])
+        wpt = ET.SubElement(gpx, "wpt", lat=PEAKS[peak.strip()]['latitude'],
+                            lon=PEAKS[peak.strip()]['longitude'])
         ET.SubElement(wpt, 'name').text = peak.strip()
 
     # Add route
     rte = ET.SubElement(gpx, "rte")
 
     for point in data['results']:
-        ET.SubElement(rte, "rtept", lat=str(point['latitude']), lon=str(point['longitude']), ele=str(point['elevation']))
+        ET.SubElement(rte, "rtept", lat=str(point['latitude']),
+                      lon=str(point['longitude']), ele=str(point['elevation']))
 
     tree = ET.ElementTree(gpx)
-    tree.write(html_path + new_route['reference'] +'.gpx', encoding='utf-8', xml_declaration=True)
+    tree.write(HTML_PATH + NEW_ROUTE['reference'] + '.gpx',
+               encoding='utf-8', xml_declaration=True)
 
-    print("STEP: GPX file created") 
+    print("STEP: GPX file created")
 
-    all_routes.append(new_route)
-    print(all_routes)
+    ALL_ROUTES.append(NEW_ROUTE)
+    print(ALL_ROUTES)
 
-
-outfile = open(top_html_name, 'w')
-for line in fileinput.FileInput(top_html_template):
-    outfile.write(line)
+OUTFILE = open(TOP_HTML_NAME, 'w')
+for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
+    OUTFILE.write(line)
     if "<!--INSERT-ROUTE-LINKS-HERE-->" in line:
         print(line)
-        for route in all_routes:
-            outfile.write('<a href=' + route['reference'] + '.html >' + route['reference'] + ': ' + route['title'] + '</a>')
+        for route in ALL_ROUTES:
+            OUTFILE.write('<a href=' + route['reference'] + '.html >'
+                          + route['reference'] + ': ' + route['title']
+                          + '</a>')
     if "INSERT-DATE-HERE" in line:
         time = str(datetime.utcnow()).split('.')[0]
-        outfile.write('    "{}"+\n'.format(time))
+        OUTFILE.write('    "{}"+\n'.format(time))
     if "INSERT-VERSION-HERE" in line:
-        git_branch, git_sha = gitBranchAndSha()
-        version = semver.format_version(MAJOR, MINOR, PATCH, git_branch, git_sha)
+        git_branch, git_sha = git_branch_and_sha()
+        version = semver.format_version(MAJOR, MINOR,
+                                        PATCH, git_branch, git_sha)
         print(version)
-        outfile.write('    "{}"+\n'.format(version))
+        OUTFILE.write('    "{}"+\n'.format(version))
