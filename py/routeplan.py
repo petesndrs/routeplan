@@ -9,6 +9,28 @@ import semver
 from datetime import datetime
 import git
 
+MAJOR = 0
+MINOR = 1
+PATCH = 0
+
+debug = True
+
+waymarks_csv = '../waymarks/waymarks.csv'
+path_routes = '../routes/'
+top_html_template = '../docs_templates/edfr.template.html'
+top_html_name = '../docs/EDFR.html'
+
+def getPeaks():
+    with open(waymarks_csv) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        peaks = {}
+        for row in csv_reader:
+            peaks[row[0].strip()] = {
+                'latitude'  : row[1].strip(),
+                'longitude' : row[2].strip() }
+        print(peaks)
+    return peaks
 
 def getPathAndFileroot(file):
     '''Function getPathAndFileroot
@@ -31,15 +53,8 @@ def gitBranchAndSha():
     short_sha = repo.git.rev_parse(sha, short=7)
     return branch, short_sha
 
-MAJOR = 0
-MINOR = 1
-PATCH = 0
-
-debug = True
-
-path_routes = '../routes/'
-top_html_template = '../docs_templates/edfr.template.html'
-top_html_name = '../docs/EDFR.html'
+print('STEP: Read peaks')
+peaks = getPeaks()
 
 dir_list = next(os.walk(path_routes))[1]
 print(dir_list)
@@ -115,6 +130,23 @@ for dir in dir_list:
         print('{} {}'.format(point['latitude'], point['longitude']))
 
     gpx = ET.Element("gpx", version="1.1", creator="Manual")
+
+    # Add waymarks
+    wptstart = ET.SubElement(gpx, "wpt", lat=str(data['results'][0]['latitude']), 
+        lon=str(data['results'][0]['longitude']))
+    ET.SubElement(wptstart, 'name').text = 'Start'
+
+    wptfinish = ET.SubElement(gpx, "wpt", lat=str(data['results'][-1]['latitude']), 
+        lon=str(data['results'][-1]['longitude']))
+    ET.SubElement(wptfinish, 'name').text = 'Finish'
+
+    for peak in config['features']['peaks'].split(','):
+        print(peak.strip())
+        wpt = ET.SubElement(gpx, "wpt", lat=peaks[peak.strip()]['latitude'], 
+            lon=peaks[peak.strip()]['longitude'])
+        ET.SubElement(wpt, 'name').text = peak.strip()
+
+    # Add route
     rte = ET.SubElement(gpx, "rte")
 
     for point in data['results']:

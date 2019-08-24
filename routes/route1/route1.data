@@ -3,8 +3,9 @@ reference = EDFR1
 title = Peckham Rye and Honor Oak
 segment = 
 description =
+
 [features] 
-peaks = Brockley passage, One tree hill
+peaks = Brockley Passage, One Tree Hill
 peaks_elev = 
 start = Peckham Rye Cafe
 start_elev = 
