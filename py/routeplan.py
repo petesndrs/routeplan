@@ -19,6 +19,7 @@ waymarks_csv = '../waymarks/waymarks.csv'
 path_routes = '../routes/'
 top_html_template = '../docs_templates/edfr.template.html'
 top_html_name = '../docs/EDFR.html'
+html_path = '../docs/'
 
 def getPeaks():
     with open(waymarks_csv) as csv_file:
@@ -64,13 +65,13 @@ new_route = {}
 
 for dir in dir_list:
 
-    input = path_routes + dir + '/route1.ll'
+    input = path_routes + dir + '/latlong.csv'
 
     print(input)
     input_root, input_fileroot = getPathAndFileroot(input)
 
     config = configparser.ConfigParser()
-    config.read(input_fileroot+'.data')
+    config.read(input_root+'/route.data')
     print(config.sections())
 
     new_route['reference'] = config['route']['reference']
@@ -153,7 +154,7 @@ for dir in dir_list:
         ET.SubElement(rte, "rtept", lat=str(point['latitude']), lon=str(point['longitude']), ele=str(point['elevation']))
 
     tree = ET.ElementTree(gpx)
-    tree.write(input_fileroot+'.gpx', encoding='utf-8', xml_declaration=True)
+    tree.write(html_path + new_route['reference'] +'.gpx', encoding='utf-8', xml_declaration=True)
 
     print("STEP: GPX file created") 
 
