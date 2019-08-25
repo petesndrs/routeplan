@@ -161,9 +161,14 @@ for next_dir in DIR_LIST:
         wpt = ET.SubElement(gpx, "wpt", lat=PEAKS[peak.strip()]['latitude'],
                             lon=PEAKS[peak.strip()]['longitude'])
         ET.SubElement(wpt, 'name').text = peak.strip()
+        ET.SubElement(wpt, 'desc').text = ('Elevation: ' 
+                                           + PEAKS[peak.strip()]['elevation']
+                                           + 'm')
 
     # Add route
     rte = ET.SubElement(gpx, "rte")
+    ET.SubElement(rte, 'name').text = NEW_ROUTE['reference']
+    ET.SubElement(rte, 'desc').text = NEW_ROUTE['title']
 
     for point in data['results']:
         ET.SubElement(rte, "rtept", lat=str(point['latitude']),
