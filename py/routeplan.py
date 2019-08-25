@@ -162,7 +162,7 @@ for next_dir in DIR_LIST:
         wpt = ET.SubElement(gpx, "wpt", lat=PEAKS[peak.strip()]['latitude'],
                             lon=PEAKS[peak.strip()]['longitude'])
         ET.SubElement(wpt, 'name').text = peak.strip()
-        ET.SubElement(wpt, 'desc').text = ('Elevation: ' 
+        ET.SubElement(wpt, 'desc').text = ('Elevation: '
                                            + PEAKS[peak.strip()]['elevation']
                                            + 'm')
 
@@ -202,8 +202,6 @@ for next_dir in DIR_LIST:
                                             PATCH, git_branch, git_sha)
             print(version)
             routefile.write('    "{}"+\n'.format(version))
-
-
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
