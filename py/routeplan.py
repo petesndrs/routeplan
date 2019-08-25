@@ -19,6 +19,7 @@ DEBUG = True
 
 WAYMARKS_CSV = '../waymarks/waymarks.csv'
 PATH_ROUTES = '../routes/'
+HTML_HEADER = '../docs_templates/edfr.header.html'
 TOP_HTML_TEMPLATE = '../docs_templates/edfr.template.html'
 TOP_HTML_NAME = '../docs/EDFR.html'
 HTML_PATH = '../docs/'
@@ -180,6 +181,10 @@ for next_dir in DIR_LIST:
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
     OUTFILE.write(line)
+    if "<!--INSERT-HEADER-HERE-->" in line:
+        print(line)
+        with open(HTML_HEADER) as infile:
+            OUTFILE.write(infile.read())
     if "<!--INSERT-ROUTE-LINKS-HERE-->" in line:
         print(line)
         for route in ALL_ROUTES:
@@ -187,9 +192,11 @@ for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
                           + route['reference'] + ': ' + route['title']
                           + '</a>')
     if "INSERT-DATE-HERE" in line:
+        print(line)
         time = str(datetime.utcnow()).split('.')[0]
         OUTFILE.write('    "{}"+\n'.format(time))
     if "INSERT-VERSION-HERE" in line:
+        print(line)
         git_branch, git_sha = git_branch_and_sha()
         version = semver.format_version(MAJOR, MINOR,
                                         PATCH, git_branch, git_sha)
