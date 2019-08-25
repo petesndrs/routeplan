@@ -14,9 +14,15 @@ function footer() {
 	document.getElementById("foottext2").innerHTML = "Version: " +
 // INSERT-VERSION-HERE
 	"";
-	}
+}
+
+function header() {
+	document.getElementById("homeButton").className = "active";
+	document.getElementById("aboutButton").className = "";
+}
 
 function body() {
+	header();
 	footer();
 }
 

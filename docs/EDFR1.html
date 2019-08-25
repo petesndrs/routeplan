@@ -10,15 +10,21 @@
 function footer() {
     document.getElementById("foottext1").innerHTML = "Last generated: " +
 // INSERT-DATE-HERE
-    "2019-08-25 19:05:33"+
+    "2019-08-25 19:33:00"+
 	"";
 	document.getElementById("foottext2").innerHTML = "Version: " +
 // INSERT-VERSION-HERE
-    "0.1.0-master+d8e42a1"+
+    "0.1.0-master+88c3af7"+
 	"";
-	}
+}
+
+function header() {
+	document.getElementById("homeButton").className = "";
+	document.getElementById("aboutButton").className = "";
+}
 
 function body() {
+	header();
 	footer();
 }
 
@@ -30,21 +36,13 @@ function body() {
 
 <!--INSERT-HEADER-HERE-->
 <div class="header">
-  <img src="EDFR-logo.png" alt="East Dulwich Fell Running"> 
+  <img src="EDFR-logo.png" alt="East Dulwich Fell Running">
   East Dulwich Fell Running
   <div class="header-right">
-    <a class="active" href="#home">Home</a>
-    <a href="www.google.com">About</a>
+    <a id="homeButton" href="./edfr.html">Home</a>
+    <a id="aboutButton" href="./edfr-about.html">About</a>
   </div>
 </div>
-<p> 
-Add text here.
-</p>
-
-<h3>Routes</h3>
-
-<!--INSERT-ROUTE-LINKS-HERE-->
-
 <footer>
   <p id="foottext1"></p>
   <p id="foottext2"></p>

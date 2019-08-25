@@ -185,7 +185,7 @@ for next_dir in DIR_LIST:
     print(ALL_ROUTES)
 
     routefile = open(HTML_PATH + NEW_ROUTE['reference'] + '.html', 'w')
-    for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
+    for line in fileinput.FileInput(ROUTE_HTML_TEMPLATE):
         routefile.write(line)
         if "<!--INSERT-HEADER-HERE-->" in line:
             print(line)
