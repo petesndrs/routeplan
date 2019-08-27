@@ -1,14 +1,13 @@
 [route]
 reference = EDFR1
 title = Peckham Rye and Honor Oak
-segment = 
-description =
-
-[features] 
-peaks = Brockley Passage, One Tree Hill
-peaks_elev = 
 start = Peckham Rye Cafe
-start_elev = 
-finish = Peckham Rye Cafe
-finish_elev =
+finish = Peckham Rye
+peaks = Brockley Passage, One Tree Hill
+description = From Cafe pass playground and head west to edge of common.
+
+[resources]
+map =
+segment =
+elevation = 
 

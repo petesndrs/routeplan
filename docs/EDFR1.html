@@ -10,11 +10,11 @@
 function footer() {
     document.getElementById("foottext1").innerHTML = "Last generated: " +
 // INSERT-DATE-HERE
-    "2019-08-25 19:33:00"+
+    "2019-08-27 23:02:12"+
 	"";
 	document.getElementById("foottext2").innerHTML = "Version: " +
 // INSERT-VERSION-HERE
-    "0.1.0-master+88c3af7"+
+    "0.1.0-master+5c3e533"+
 	"";
 }
 
@@ -23,8 +23,25 @@ function header() {
 	document.getElementById("aboutButton").className = "";
 }
 
+function title() {
+	document.getElementById("titletext").innerHTML = "" +
+// INSERT-TITLE-HERE
+    "EDFR1: Peckham Rye and Honor Oak"+
+	"";
+}
+
+function mainbody() {
+	document.getElementById("mainbodytext").innerHTML = "" +
+// INSERT-MAINBODY-HERE
+    "From Cafe pass playground and head west to edge of common."+
+	"";
+}
+
+
 function body() {
 	header();
+        title();
+	mainbody();
 	footer();
 }
 
@@ -43,6 +60,10 @@ function body() {
     <a id="aboutButton" href="./edfr-about.html">About</a>
   </div>
 </div>
+<h2 id=titletext></h2>
+
+<div id=mainbodytext></div>
+
 <footer>
   <p id="foottext1"></p>
   <p id="foottext2"></p>

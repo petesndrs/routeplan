@@ -2,22 +2,25 @@ body {
 #background-color: lightblue;
 #background-size: cover;
 font-family: Arial;
-font-size: 32px;
+font-size: 16px;
 }
 
 h1 {
 color: firebrick;
 text-align: left;
+font-size: 28px;
 }
 
 h2 {
 color: firebrick;
 text-align: left;
+font-size: 24px;
 }
 
 h3 {
 color: firebrick;
 text-align: left;
+font-size: 20px;
 }
 
 iframe {
@@ -39,6 +42,7 @@ font-size: 16px;
   overflow: hidden;
   background-color: white;
   padding: 20px 10px;
+  font-size: 28px;
 }
 
 /* Style the header links */

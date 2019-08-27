@@ -157,7 +157,7 @@ for next_dir in DIR_LIST:
                               lon=str(data['results'][-1]['longitude']))
     ET.SubElement(wptfinish, 'name').text = 'Finish'
 
-    for peak in config['features']['peaks'].split(','):
+    for peak in config['route']['peaks'].split(','):
         print(peak.strip())
         wpt = ET.SubElement(gpx, "wpt", lat=PEAKS[peak.strip()]['latitude'],
                             lon=PEAKS[peak.strip()]['longitude'])
@@ -195,6 +195,14 @@ for next_dir in DIR_LIST:
             print(line)
             time = str(datetime.utcnow()).split('.')[0]
             routefile.write('    "{}"+\n'.format(time))
+        elif "INSERT-TITLE-HERE" in line:
+            print(line)
+            title = config['route']['reference'] + ": " + config['route']['title']
+            routefile.write('    "{}"+\n'.format(title))
+        elif "INSERT-MAINBODY-HERE" in line:
+            print(line)
+            desc = config['route']['description']
+            routefile.write('    "{}"+\n'.format(desc))
         elif "INSERT-VERSION-HERE" in line:
             print(line)
             git_branch, git_sha = git_branch_and_sha()

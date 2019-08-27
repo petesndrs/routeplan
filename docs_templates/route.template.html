@@ -21,8 +21,23 @@ function header() {
 	document.getElementById("aboutButton").className = "";
 }
 
+function title() {
+	document.getElementById("titletext").innerHTML = "" +
+// INSERT-TITLE-HERE
+	"";
+}
+
+function mainbody() {
+	document.getElementById("mainbodytext").innerHTML = "" +
+// INSERT-MAINBODY-HERE
+	"";
+}
+
+
 function body() {
 	header();
+        title();
+	mainbody();
 	footer();
 }
 
@@ -33,6 +48,10 @@ function body() {
 <body onload="body()">
 
 <!--INSERT-HEADER-HERE-->
+
+<h2 id=titletext></h2>
+
+<div id=mainbodytext></div>
 
 <footer>
   <p id="foottext1"></p>
