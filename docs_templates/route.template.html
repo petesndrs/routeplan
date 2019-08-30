@@ -33,11 +33,17 @@ function mainbody() {
 	"";
 }
 
+function mapframe() {
+	document.getElementById("mapframe").src = "" +
+// INSERT-MAP-URL-HERE
+	"";
+}
 
 function body() {
 	header();
-        title();
+	title();
 	mainbody();
+	mapframe();
 	footer();
 }
 
@@ -52,6 +58,9 @@ function body() {
 <h2 id=titletext></h2>
 
 <div id=mainbodytext></div>
+
+<iframe id=mapframe src=""
+ width="640" height="480"> </iframe>
 
 <footer>
   <p id="foottext1"></p>

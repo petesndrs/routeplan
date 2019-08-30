@@ -210,6 +210,9 @@ for next_dir in DIR_LIST:
                                             PATCH, git_branch, git_sha)
             print(version)
             routefile.write('    "{}"+\n'.format(version))
+        elif "INSERT-MAP-URL-HERE" in line:
+            print(line)
+            routefile.write('    "{}"+\n'.format(config['resources']['map']))
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):

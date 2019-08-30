@@ -10,11 +10,11 @@
 function footer() {
     document.getElementById("foottext1").innerHTML = "Last generated: " +
 // INSERT-DATE-HERE
-    "2019-08-27 23:02:12"+
+    "2019-08-30 20:18:56"+
 	"";
 	document.getElementById("foottext2").innerHTML = "Version: " +
 // INSERT-VERSION-HERE
-    "0.1.0-master+5c3e533"+
+    "0.1.0-master+868259c"+
 	"";
 }
 
@@ -37,11 +37,18 @@ function mainbody() {
 	"";
 }
 
+function mapframe() {
+	document.getElementById("mapframe").src = "" +
+// INSERT-MAP-URL-HERE
+    "https://www.google.com/maps/d/u/0/embed?mid=1QxvRJO1VTcUYL0xbflSrvrAmbDk4pcqZ"+
+	"";
+}
 
 function body() {
 	header();
-        title();
+	title();
 	mainbody();
+	mapframe();
 	footer();
 }
 
@@ -63,6 +70,9 @@ function body() {
 <h2 id=titletext></h2>
 
 <div id=mainbodytext></div>
+
+<iframe id=mapframe src=""
+ width="640" height="480"> </iframe>
 
 <footer>
   <p id="foottext1"></p>

@@ -7,7 +7,7 @@ peaks = Brockley Passage, One Tree Hill
 description = From Cafe pass playground and head west to edge of common.
 
 [resources]
-map =
+map = https://www.google.com/maps/d/u/0/embed?mid=1QxvRJO1VTcUYL0xbflSrvrAmbDk4pcqZ
 segment =
 elevation = 
 
