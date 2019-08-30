@@ -23,21 +23,26 @@ text-align: left;
 font-size: 20px;
 }
 
+table {
+float: right;
+}
+
 iframe {
+clear:both;
 display:block;
 margin: auto;
-width: 90%;
-background-color: white;
+width: "640";
+height: "480";
 }
 
 footer {
+clear:both;
 color: white;
 background-color: firebrick;
 font-family: Arial;
 font-size: 16px;
 }
 
-/* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
   background-color: white;

@@ -39,11 +39,24 @@ function mapframe() {
 	"";
 }
 
+function box() {
+	document.getElementById("boxstart").innerHTML = "<strong>Start:</strong>" +
+// INSERT-START-HERE
+	"";
+	document.getElementById("boxpeaks").innerHTML = "<strong>Peaks:</strong>" +
+// INSERT-PEAKS-HERE
+	"";
+	document.getElementById("boxdistance").innerHTML = "<strong>Distance:</strong>" +
+// INSERT-DISTANCE-HERE
+	"";
+}
+
 function body() {
 	header();
 	title();
 	mainbody();
 	mapframe();
+        box();
 	footer();
 }
 
@@ -58,6 +71,17 @@ function body() {
 <h2 id=titletext></h2>
 
 <div id=mainbodytext></div>
+
+<table border=1>
+  <tr><th>Features</th></tr>
+  <tr><td>
+  <ul style="list-style-type:none;">
+  <li id=boxstart> </li>
+  <li id=boxpeaks> </li>
+  <li id=boxdistance> </li>
+  </ul>
+  </td></tr>
+</table>
 
 <iframe id=mapframe src=""
  width="640" height="480"> </iframe>
