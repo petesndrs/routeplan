@@ -46,8 +46,7 @@ function box() {
 	document.getElementById("boxpeaks").innerHTML = "" +
 // INSERT-INFO-PEAKS-HERE
 	"";
-	document.getElementById("boxdistance").innerHTML = ""
-	+
+	document.getElementById("boxdistance").innerHTML = "" +
 // INSERT-INFO-DISTANCE-HERE
 	"";
 }
@@ -71,14 +70,14 @@ function body() {
 
 <h2 id=titletext></h2>
 
-<div id=mainbodytext></div>
-
-<table border=1>
+<table>
   <tr><th colspan="2">Features</th></tr>
   <tr><th align="right">Start:</th><td align="left"  id=boxstart></td></tr>
   <tr><th align="right">Peaks:</th><td align="left" id=boxpeaks></td></tr>
   <tr><th align="right">Distance:</th><td align="left" id=boxdistance> </td></tr>
 </table>
+
+<div id=mainbodytext></div>
 
 <iframe id=mapframe src=""
  width="640" height="480"> </iframe>

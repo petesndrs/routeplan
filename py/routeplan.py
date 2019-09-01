@@ -225,7 +225,7 @@ for next_dir in DIR_LIST:
             print(line)
             start = config['route']['start']
             routefile.write('    "{}"+\n'.format(start))
-       elif "INSERT-INFO-DISTANCE-HERE" in line:
+        elif "INSERT-INFO-DISTANCE-HERE" in line:
             print(line)
             dist = config['resources']['distance']
             routefile.write('    "{}"+\n'.format(dist))
