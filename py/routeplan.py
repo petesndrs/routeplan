@@ -201,8 +201,8 @@ for next_dir in DIR_LIST:
             routefile.write('    "{}"+\n'.format(title))
         elif "INSERT-MAINBODY-HERE" in line:
             print(line)
-            desc = config['route']['description']
-            routefile.write('    "{}"+\n'.format(desc))
+            for newline in config['route']['description'].split('\n'):
+                 routefile.write('    "{}"+\n'.format(newline))
         elif "INSERT-VERSION-HERE" in line:
             print(line)
             git_branch, git_sha = git_branch_and_sha()
@@ -225,6 +225,11 @@ for next_dir in DIR_LIST:
             print(line)
             start = config['route']['start']
             routefile.write('    "{}"+\n'.format(start))
+       elif "INSERT-INFO-DISTANCE-HERE" in line:
+            print(line)
+            dist = config['resources']['distance']
+            routefile.write('    "{}"+\n'.format(dist))
+
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):

@@ -3,11 +3,15 @@ reference = EDFR1
 title = Peckham Rye and Honor Oak
 start = Peckham Rye Cafe
 finish = Peckham Rye
-peaks = Brockley Passage, One Tree Hill
-description = From Cafe pass playground and head west to edge of common.
+peaks = Brockley Footpath, One Tree Hill
+description = From cafe pass playground and head East to edge of common. 
+ Cross road onto Somerton road, at the end turn left into Waveney avenue.
+ Waveney avenue ends and turn right onto Forester road, follow forester road all the way to the T-junction with Linden grove. 
+ Turn right onto Linden grove and follow the road around the left hand bend, 
+ at the corner of the cemetary turn into Brockley footpath which follows the wall rising and then dropping down to Inverton road.
 
 [resources]
 map = https://www.google.com/maps/d/u/0/embed?mid=1QxvRJO1VTcUYL0xbflSrvrAmbDk4pcqZ
 segment =
-elevation = 
+distance = 5.68 
 
