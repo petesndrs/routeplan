@@ -213,6 +213,18 @@ for next_dir in DIR_LIST:
         elif "INSERT-MAP-URL-HERE" in line:
             print(line)
             routefile.write('    "{}"+\n'.format(config['resources']['map']))
+        elif "INSERT-INFO-PEAKS-HERE" in line:
+            print(line)
+            peaks = ""
+            for peak in config['route']['peaks'].split(','):
+                print(peak.strip())
+                peaks += peak + " (" + PEAKS[peak.strip()]['elevation'] + "m), "
+            print(peaks)
+            routefile.write('    "{}"+\n'.format(peaks[:-2]))
+        elif "INSERT-INFO-START-HERE" in line:
+            print(line)
+            start = config['route']['start']
+            routefile.write('    "{}"+\n'.format(start))
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):

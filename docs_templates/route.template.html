@@ -40,14 +40,15 @@ function mapframe() {
 }
 
 function box() {
-	document.getElementById("boxstart").innerHTML = "<strong>Start:</strong>" +
-// INSERT-START-HERE
+	document.getElementById("boxstart").innerHTML = "" +
+// INSERT-INFO-START-HERE
 	"";
-	document.getElementById("boxpeaks").innerHTML = "<strong>Peaks:</strong>" +
-// INSERT-PEAKS-HERE
+	document.getElementById("boxpeaks").innerHTML = "" +
+// INSERT-INFO-PEAKS-HERE
 	"";
-	document.getElementById("boxdistance").innerHTML = "<strong>Distance:</strong>" +
-// INSERT-DISTANCE-HERE
+	document.getElementById("boxdistance").innerHTML = ""
+	+
+// INSERT-INFO-DISTANCE-HERE
 	"";
 }
 
@@ -56,7 +57,7 @@ function body() {
 	title();
 	mainbody();
 	mapframe();
-        box();
+	box();
 	footer();
 }
 
@@ -73,14 +74,10 @@ function body() {
 <div id=mainbodytext></div>
 
 <table border=1>
-  <tr><th>Features</th></tr>
-  <tr><td>
-  <ul style="list-style-type:none;">
-  <li id=boxstart> </li>
-  <li id=boxpeaks> </li>
-  <li id=boxdistance> </li>
-  </ul>
-  </td></tr>
+  <tr><th colspan="2">Features</th></tr>
+  <tr><th align="right">Start:</th><td align="left"  id=boxstart></td></tr>
+  <tr><th align="right">Peaks:</th><td align="left" id=boxpeaks></td></tr>
+  <tr><th align="right">Distance:</th><td align="left" id=boxdistance> </td></tr>
 </table>
 
 <iframe id=mapframe src=""
