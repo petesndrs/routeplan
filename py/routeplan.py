@@ -230,6 +230,10 @@ for next_dir in DIR_LIST:
             dist = config['resources']['distance']
             routefile.write('    "{}"+\n'.format(dist))
 
+        elif "INSERT-INFO-GPX-HERE" in line:
+            print(line)
+            gpx = config['route']['reference'] + '.gpx'
+            routefile.write('    "<a href=./{}>{}</a>"+\n'.format(gpx,gpx))
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):

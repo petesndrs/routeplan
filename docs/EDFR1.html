@@ -10,11 +10,11 @@
 function footer() {
     document.getElementById("foottext1").innerHTML = "Last generated: " +
 // INSERT-DATE-HERE
-    "2019-09-01 22:27:33"+
+    "2019-09-02 18:12:09"+
 	"";
 	document.getElementById("foottext2").innerHTML = "Version: " +
 // INSERT-VERSION-HERE
-    "0.1.0-master+56f0c84"+
+    "0.1.0-master+ba705aa"+
 	"";
 }
 
@@ -61,6 +61,10 @@ function box() {
 // INSERT-INFO-DISTANCE-HERE
     "5.68"+
 	"";
+	document.getElementById("boxgpx").innerHTML = "" +
+// INSERT-INFO-GPX-HERE
+    "<a href=./EDFR1.gpx>EDFR1.gpx</a>"+
+	"";
 }
 
 function body() {
@@ -91,9 +95,10 @@ function body() {
 
 <table>
   <tr><th colspan="2">Features</th></tr>
-  <tr><th align="right">Start:</th><td align="left"  id=boxstart></td></tr>
-  <tr><th align="right">Peaks:</th><td align="left" id=boxpeaks></td></tr>
-  <tr><th align="right">Distance:</th><td align="left" id=boxdistance> </td></tr>
+  <tr><td class=infocol1>Start:</td><td class=infocol2 id=boxstart></td></tr>
+  <tr><td class=infocol1>Peaks:</td><td class=infocol2 id=boxpeaks></td></tr>
+  <tr><td class=infocol1>Distance:</td><td class=infocol2 id=boxdistance> </td></tr>
+  <tr><td class=infocol1>GPX:</td><td class=infocol2 id=boxgpx> </td></tr>
 </table>
 
 <div id=mainbodytext></div>

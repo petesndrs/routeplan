@@ -49,6 +49,9 @@ function box() {
 	document.getElementById("boxdistance").innerHTML = "" +
 // INSERT-INFO-DISTANCE-HERE
 	"";
+	document.getElementById("boxgpx").innerHTML = "" +
+// INSERT-INFO-GPX-HERE
+	"";
 }
 
 function body() {
@@ -72,9 +75,10 @@ function body() {
 
 <table>
   <tr><th colspan="2">Features</th></tr>
-  <tr><th align="right">Start:</th><td align="left"  id=boxstart></td></tr>
-  <tr><th align="right">Peaks:</th><td align="left" id=boxpeaks></td></tr>
-  <tr><th align="right">Distance:</th><td align="left" id=boxdistance> </td></tr>
+  <tr><td class=infocol1>Start:</td><td class=infocol2 id=boxstart></td></tr>
+  <tr><td class=infocol1>Peaks:</td><td class=infocol2 id=boxpeaks></td></tr>
+  <tr><td class=infocol1>Distance:</td><td class=infocol2 id=boxdistance> </td></tr>
+  <tr><td class=infocol1>GPX:</td><td class=infocol2 id=boxgpx> </td></tr>
 </table>
 
 <div id=mainbodytext></div>

@@ -32,22 +32,28 @@ border-left: 1px solid black;
 }
 
 tr {
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+border-bottom: 1px solid black;
+border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 1px solid black;
 }
-th {
-    border-bottom: none;
-    border-top: none;
-    border-right: none;
-    border-left: none;
+
+td.infocol1 {
+color: firebrick;
+font-weight: bold;
+text-align: right;
+border-bottom: none;
+border-top: none;
+border-right: none;
+border-left: none;
 }
-td {
-    border-bottom: none;
-    border-top: none;    
-    border-right: none;
-    border-left: none;
+
+td.infocol2 {
+text-align: left;
+border-bottom: none;
+border-top: none;    
+border-right: none;
+border-left: none;
 }
 
 iframe {
