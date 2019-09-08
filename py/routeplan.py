@@ -7,6 +7,7 @@ import csv
 import json
 import xml.etree.cElementTree as ET
 from datetime import datetime
+import argparse
 import requests
 import semver
 import git
@@ -77,6 +78,13 @@ def git_branch_and_sha():
     return branch, short_sha
 
 
+PARSER = argparse.ArgumentParser()
+PARSER.add_argument('-r', '--route', help='Name of specific route to process',
+                    dest='route', default='all')
+ARGS = PARSER.parse_args()
+
+print('Processing routes: ' + ARGS.route)
+
 print('STEP: Read peaks')
 PEAKS = get_peaks()
 
@@ -87,6 +95,9 @@ ALL_ROUTES = []
 NEW_ROUTE = {}
 
 for next_dir in DIR_LIST:
+
+    if next_dir != ARGS.route and ARGS.route != 'all':
+        continue
 
     input_csv = PATH_ROUTES + next_dir + '/latlong.csv'
 
@@ -197,12 +208,13 @@ for next_dir in DIR_LIST:
             routefile.write('    "{}"+\n'.format(time))
         elif "INSERT-TITLE-HERE" in line:
             print(line)
-            title = config['route']['reference'] + ": " + config['route']['title']
+            title = (config['route']['reference'] + ": "
+                     + config['route']['title'])
             routefile.write('    "{}"+\n'.format(title))
         elif "INSERT-MAINBODY-HERE" in line:
             print(line)
             for newline in config['route']['description'].split('\n'):
-                 routefile.write('    "{}"+\n'.format(newline))
+                routefile.write('    "{}"+\n'.format(newline))
         elif "INSERT-VERSION-HERE" in line:
             print(line)
             git_branch, git_sha = git_branch_and_sha()
@@ -218,7 +230,8 @@ for next_dir in DIR_LIST:
             peaks = ""
             for peak in config['route']['peaks'].split(','):
                 print(peak.strip())
-                peaks += peak + " (" + PEAKS[peak.strip()]['elevation'] + "m), "
+                peaks += (peak + " (" + PEAKS[peak.strip()]['elevation']
+                          + "m), ")
             print(peaks)
             routefile.write('    "{}"+\n'.format(peaks[:-2]))
         elif "INSERT-INFO-START-HERE" in line:
@@ -233,7 +246,7 @@ for next_dir in DIR_LIST:
         elif "INSERT-INFO-GPX-HERE" in line:
             print(line)
             gpx = config['route']['reference'] + '.gpx'
-            routefile.write('    "<a href=./{}>{}</a>"+\n'.format(gpx,gpx))
+            routefile.write('    "<a href=./{0}>{0}</a>"+\n'.format(gpx))
 
 OUTFILE = open(TOP_HTML_NAME, 'w')
 for line in fileinput.FileInput(TOP_HTML_TEMPLATE):
